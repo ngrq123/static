@@ -1,13 +1,11 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Upload to AWS') {
             steps {
-                sh 'echo "Hello World"'
-                sh '''
-                    echo "Multiline shell steps works too"
-                    ls -lah
-                '''
+                withAWS(profile:'aws-static') {
+                    s3Upload(file:'index.html', bucket:'ruiqinng-devops-project3-jenkins-pipeline', path:'index.html')
+                }
             }
         }
     }
